@@ -2,21 +2,25 @@
 import { ref } from 'vue';
 
     let classChanger = ref("shape");
+    let square = ref("square");
+    let triangle = ref("triangle");
+    let circle = ref("circle");
 
     function addView() {
-        classChanger= "hola";
-        console.log("hola");
+        if(square.value == "square" && classChanger.value == "shape"){
+            classChanger.value += " invisible";
+        }
     }
 </script>
 <template>
     <div id="container">
-        <div :class="classChanger" id="square" @click="addView()">
+        <div :class="classChanger" :id="square" @click="addView()">
             <h1></h1>
         </div>
-        <div class="shape" id="triangle">
+        <div :class="classChanger" :id="triangle"  @click="addView()">
             <h1></h1>
         </div>
-        <div class="shape" id="circle">
+        <div :class="classChanger" :id="circle"  @click="addView()">
             <h1></h1>
         </div>
     </div>
