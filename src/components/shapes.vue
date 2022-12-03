@@ -1,30 +1,56 @@
 <script setup >
+import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
-
-    let classChanger = ref("shape");
-    let square = ref("square");
-    let triangle = ref("triangle");
-    let circle = ref("circle");
-
-    function addView() {
-        if(square.value == "square" && classChanger.value == "shape"){
-            classChanger.value += " invisible";
+    //VARIABLES
+    let classChanger = ref([0,0,0]);
+    //METHODS
+    function addView(param) {
+        console.log(param);
+        if(param == 'square' ){
+            classChanger.value[0] += 1;
         }
+        if(param== "triangle" ){
+            classChanger.value[1] += 1;
+        }
+        if(param == "circle" ){
+            classChanger.value[2] += 1;
+        }
+        console.log(classChanger.value);
     }
+    function restart(){
+        classChanger.value = [0,0,0]
+    }
+    // COMPUTED
+    const modifySquare = computed(()=>{
+        return {
+            'invisible': classChanger.value[0] > 0,
+        }
+    });
+    const modifyTriangle = computed(()=>{
+        return{
+            'invisible': classChanger.value[1] > 0,
+        }
+    });
+    const modifyCircle = computed(()=>{
+        return{
+            'invisible': classChanger.value[2] > 0,
+        }
+    });
+    
 </script>
 <template>
     <div id="container">
-        <div :class="classChanger" :id="square" @click="addView()">
+        <div :class="['shape','square', modifySquare ]" id="square1" @click="addView('square')">
             <h1></h1>
         </div>
-        <div :class="classChanger" :id="triangle"  @click="addView()">
+        <div :class="['shape','triangle', modifyTriangle ]" id="triangle2"  @click="addView('triangle')">
             <h1></h1>
         </div>
-        <div :class="classChanger" :id="circle"  @click="addView()">
+        <div :class="['shape', 'circle', modifyCircle]" id="circle3"  @click="addView('circle')">
             <h1></h1>
         </div>
     </div>
-    <button id="btn-restart">Restart</button>
+    <button id="btn-restart" @click="restart()">Restart</button>
 </template>
 <style lang="scss">
     #container{
@@ -41,11 +67,11 @@ import { ref } from 'vue';
         .shape:hover{
             transform: translateY(-5px);
         }
-        #circle{
+        .circle{
             border-radius: 50px;
             background-color: brown;
         }
-        #triangle{
+        .triangle{
             width: 0;
             height: 0;
             border-style: solid;
@@ -54,14 +80,14 @@ import { ref } from 'vue';
             background-color: transparent;
 
         }
-        #square{
+        .square{
             background-color: chocolate;
         }
-        #circle:hover{
+        .circle:hover{
             border-radius: 50px;
             background-color: rgb(65, 1, 1);
         }
-        #triangle:hover{
+        .triangle:hover{
             width: 0;
             height: 0;
             border-style: solid;
@@ -70,8 +96,11 @@ import { ref } from 'vue';
             background-color: transparent;
 
         }
-        #square:hover{
+        .square:hover{
             background-color: rgb(69, 30, 210);
         }
+    }
+    .invisible{
+        visibility: hidden;
     }
 </style>

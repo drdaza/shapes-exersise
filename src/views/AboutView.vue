@@ -1,12 +1,10 @@
 <script setup>
-import  HelloWorld from "../components/HelloWorld.vue";
 import shapes from "../components/shapes.vue"
 </script>
 <template>
   
   <div class="about">
-    <h1>This is an about page</h1>
-    <HelloWorld />
+    <h1>Shapes Exersise</h1>
     <shapes />
   </div>
 </template>
